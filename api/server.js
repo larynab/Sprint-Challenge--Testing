@@ -23,5 +23,9 @@ server.post("/games", async (req, res) => {
     });
   }
 });
+//GET
+server.get('/games', async (req, res)=>{
+    res.status(200).json(gamesDB);
+})
 //CONNECT to server by Export!a
 module.exports = server;

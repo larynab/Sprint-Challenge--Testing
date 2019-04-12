@@ -1,5 +1,5 @@
 const request = require("supertest");
-
+const db = require('../data/dbConfig.js')
 const server = require("./server.js");
 
 describe("Routes", () => {
@@ -29,10 +29,22 @@ describe("Routes", () => {
     });
   });
 
-  describe('GET /games', () => {
-    it('should return status 200 on get request', async ()=>{
-        const res = await request(server).get('/games');
-        expect(res.status).toBe(200);
-    })
-  })
+  describe("GET /games", () => {
+    //COMMENT THIS ON AND OFF FOR TESTING
+    // beforeEach(async () => {
+    //   await db("games").truncate();
+    // });
+    it("should return status 200 on get request", async () => {
+      const res = await request(server).get("/games");
+      expect(res.status).toBe(200);
+    });
+    it("should return array on request", async () => {
+        const games = await db('games');
+        expect(games).toHaveLength(6);
+    });
+    it("should return empty array on request", async () => {
+        const games = await db('games');
+        expect(games).toHaveLength(0);
+    });
+  });
 });
